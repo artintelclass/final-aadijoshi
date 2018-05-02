@@ -1,37 +1,26 @@
 # Final
 
-## Brief
-For the final your are free to choose what you'd like to do. The project should be a creative use of machine learning. It should be more ambitious in scope compared to what we've done so far this semester. You could do any number of things. A few sample ideas are:
-* Build upon and fully complete one of your projects from earlier in the semester
-* Create an interactive classification app or game [(example)](https://experiments.withgoogle.com/ai/emoji-scavenger)
-* Create a physical comic book using style transfer
-* Create an interactive dance performance
-* Generate a musical composition or an EP of songs
-* Create a music/sound generation tool
-* Create a twitter bot (a variation could be a bot that learns and grows from people's responses)
-* Print out a series of AI enabled art
-* Create an interactive application (tool/game/art piece) of char-rnn like text generation 
-* Create an art piece that illustrates/amplifies characteristics of this technology (could be illuminating or comedic or both)
-* Train an LSTM on SVG data and output new SVGs
+## Download
+The model can be downloaded from [here](https://drive.google.com/open?id=1Qkc6AV_go3XApkRrCN5VGR4NjXMYt1QH)
 
-The list could go on and on. The above should be considered far from exhaustive.
+## Introduction
+The goal of this project was to create a tool that could assist comic book creators visualize what a rough sketch would look like once it was improved and generated on the computer. This would be extremely useful during the brainstorming phase, for example. Instead of having to produce a detailed sketch, or having to use a graphics editor, the author could create a rough sketch and then get an idea of what the final product would look like.
 
-You may work within a group or by yourself. 
+## Process
+Attempt 1: Style transfer
+The first idea I had was to use style transfer. The sketch that is provided as input could be seen as the 'edges' of a photo after edge detection. For example, the sketch of a city skyline and a photo of a city skyline, after it passes through an edge-detection algorithm, would be similar. Given an input image, then, the goal would be to find a similar image in the database, apply style transfer to the image, and output the new image. Furthermore, the input image could be broken down into smaller 'layers' that would be decided by the user. If an image consists of a house and car, rather than looking for similar images in the database, an output image could be created by applying style transfer to a house and a car seperately, then layering them together.
 
-## Grading Rubric
-* 25% Creative Thinking: The project should not be just reproducing things using the tools we've looked at. It should have some novel implementation or approach in the application of the tech. Depending on the project, this could include indication of development of personal style/taste (if art project for example), and/or imaginative implementations of the tech in exploring ideas. 
-* 25% Production Quality: The project needs to be well polished, with considerable work put into the finished work.
-* 25% Clear Conceptual Underpinning: The project needs to be well thought out, and have a clear concept that you are working with from start to finish.
-* 20% Machine Learning Application: The project should use and benefit from machine learning.
-* 5% Press: The project execution and documentation should be at a level that you feel comfortable submitting it to a press outlet. This last 7% will be for those who actually submit their project to one or more press outlets. The outlet doesn't have to cover your project, you just need to have sent it in.
+The advantage of this method was that it could turn a two-dimensional sketch into a more realistic 'three-dimensional' one. For example, a building could be drawn as a rectangle on paper. After the image passes through the program, a photo of a real building would be outputted, although style transfer would be applied to this photo.
 
+After testing out style transfer on a photo, however, I decided to drop this idea. The result of applying a 'comic' style transfer to a city skyline can be seen here: ![result](https://drive.google.com/open?id=18bUdAK_2APMa_usko24DBiAG74S9_dZ)
 
-## Schedule
-* April 16th (Mon): Ideas & concepts presented
-* April 23rd (Mon): Mid-project: considerable work needs to be done at this point.
-* May 2nd (Wed): ***FINAL PROJECT PRESENTATIONS***
-* May 7th (Mon): IM Show
+The output was extremely distorted, and did not look like a comic-book style at all.
 
-## Repo
-Use this repo to store all your code, sketches, documentation, etc.
+Attempt 2: pix2pix 2d to 3d image
+For the second attempt, I tried using pix2pix instead of style transfer. For the dataset, I found a comic book that had an 'original' version with pictures that were not much better than hand-drawn sketches, and a 'new' version with pictures that were higher quality and more detailed. While these two versions were not exact matches, there were some parts where similar scenes were depicted in both. Some examples: ![1](https://drive.google.com/open?id=1_yxapCnB5fy6y1n0zJe8PolRhzYXACk7), ![2](https://drive.google.com/open?id=1e-W7WrT84gbzbcQaBE3Efcvx873j-fKO).
+
+However, training on this dataset did not yield good results. This is an example input, output, and target: ![output](https://drive.google.com/open?id=1i-LBuHj20aaEfY8b09F7Ai1_jGYJpdng). The output usually had very little resemblance to the input. After looking back at the dataset, I realized that this was most likely because the target output had very little resemblance to the input. Although they depicted similar 'scenes', there was actually very little resemblance between the input and target, and there were no patterns for how the input could be converted into the target. Based on this, I decided to try a slightly different approach for my third attempt.
+
+Attempt 3: pix2pix 2d to 2d image
+For the third attempt, I decided to focus on a different way to improve sketches than turning them into '3d' drawings. Rather than making sketches 3d, I focused on augmenting the sketches with additional details to make them more realistic but still in a comic-book style. To do this, I took the panels from the comic-books and produced a new image by performing canny edge-detection on the image. The edges were passed as the input, with the original panel from the comic-book as the target. The edge-detection removed a lot of details from the images, such as color and shading. 
 
