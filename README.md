@@ -4,7 +4,7 @@
 The model can be downloaded from [here](https://drive.google.com/open?id=1Qkc6AV_go3XApkRrCN5VGR4NjXMYt1QH)
 
 ## Usage
-In the command-line: 'python cam.py'
+In the command-line: 'python cam.py'\
 Press s when the program is running and an output image will be generated for that frame
 
 ## Introduction
